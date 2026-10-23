@@ -10,6 +10,7 @@ import { CenteredSpinner, ErrorNote, Spinner } from '@/components/ui/feedback'
 import { useAsync } from '@/hooks/useAsync'
 import { formatDateTime, toApiDate, toDateInputValue } from '@/lib/format'
 import { type ApplicationRequest } from '@/types'
+import { requiresInterviewConfirmation } from '@/lib/interviews'
 import {
   createApplication,
   getApplication,
@@ -85,6 +86,14 @@ export default function ApplicationForm() {
   const navigate = useNavigate()
   const [submitError, setSubmitError] = useState<string | null>(null)
   const [resumeDialog, setResumeDialog] = useState(false)
+  const [interviewConfirmation, setInterviewConfirmation] = useState<{
+    resolve: (answer: boolean | null) => void
+  } | null>(null)
+
+  function answerInterviewConfirmation(answer: boolean | null) {
+    interviewConfirmation?.resolve(answer)
+    setInterviewConfirmation(null)
+  }
 
   // preserved fields not directly edited in the form
   const [reminderEnabled, setReminderEnabled] = useState(true)
@@ -154,6 +163,14 @@ export default function ApplicationForm() {
     setSubmitError(null)
     try {
       const payload = buildRequest(values, reminderEnabled, interviewScheduled, rhAcceptedConnection)
+      if (requiresInterviewConfirmation(existing.data?.status, payload.status)) {
+        const completed = await new Promise<boolean | null>((resolve) => {
+          setInterviewConfirmation({ resolve })
+        })
+        if (completed === null) return
+        // Send an absolute total so retries cannot increment a second time.
+        if (completed) payload.interviewCount = values.interviewCount + 1
+      }
       const saved = isEdit && id ? await updateApplication(id, payload) : await createApplication(payload)
       // Mark recruiter DM as sent if newly checked.
       if (values.markDmSent && !alreadyDmSent) {
@@ -258,12 +275,24 @@ export default function ApplicationForm() {
             <Input id="nextStepTime" className="mono" type="time" {...register('nextStepTime')} />
           </Field>
 
-          <Field label="Interviews" htmlFor="interviewCount" hint="how many interviews you've had">
+          <Field
+            label="Interviews"
+            htmlFor="interviewCount"
+            hint="how many interviews you've completed for this application"
+            error={errors.interviewCount?.message}
+          >
             <Input
               id="interviewCount"
               type="number"
               min={0}
-              {...register('interviewCount', { valueAsNumber: true, min: 0 })}
+              step={1}
+              aria-invalid={!!errors.interviewCount}
+              {...register('interviewCount', {
+                valueAsNumber: true,
+                required: 'Enter the number of completed interviews',
+                min: { value: 0, message: 'The count cannot be negative' },
+                validate: (value) => Number.isInteger(value) || 'Enter a whole number',
+              })}
             />
           </Field>
           <Field label="Platform" htmlFor="platform" hint="where you found this vacancy">
@@ -360,6 +389,22 @@ export default function ApplicationForm() {
           </Button>
         </div>
       </form>
+
+      <Dialog
+        open={interviewConfirmation !== null}
+        onClose={() => answerInterviewConfirmation(null)}
+        title="Did you complete an interview?"
+        footer={
+          <>
+            <Button onClick={() => answerInterviewConfirmation(false)}>No, keep count</Button>
+            <Button variant="primary" onClick={() => answerInterviewConfirmation(true)}>Yes, add interview</Button>
+          </>
+        }
+      >
+        Did you actually attend an interview for this application? Choose Yes to add one
+        completed interview, or No to save the status without increasing the count.
+        Scheduled or cancelled interviews and asynchronous technical tests do not count.
+      </Dialog>
 
       <Dialog
         open={resumeDialog}
