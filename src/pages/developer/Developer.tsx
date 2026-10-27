@@ -29,7 +29,7 @@ function GitHubIcon() {
  * GitHub. It is never treated as the identity of the account - that is the numeric user ID the
  * backend resolves the profile from.
  */
-const FALLBACK_GITHUB_URL = import.meta.env.VITE_GITHUB_URL || 'https://github.com/vitorhugo-dotnet'
+const FALLBACK_GITHUB_URL = import.meta.env.VITE_GITHUB_URL || 'https://github.com/hugoalves-dev'
 
 function stripGitHubHost(url: string) {
   return url.replace(/^https?:\/\/(www\.)?github\.com\//, '').replace(/\/+$/, '')
