@@ -20,6 +20,7 @@ import McpIntegration from '@/pages/mcp/McpIntegration'
 import AccountSettings from '@/pages/account/AccountSettings'
 import Help from '@/pages/help/Help'
 import PrivacyPolicy from '@/pages/legal/PrivacyPolicy'
+import Landing from '@/pages/Landing'
 
 export default function App() {
   useSyncReplay()
@@ -64,6 +65,7 @@ export default function App() {
     <>
       <OfflineBanner />
       <Routes>
+      <Route path="/" element={accessToken ? <Navigate to="/dashboard" replace /> : <Landing />} />
       <Route path="/login" element={accessToken ? <Navigate to="/dashboard" replace /> : <Login />} />
       <Route path="/register" element={accessToken ? <Navigate to="/dashboard" replace /> : <Register />} />
       <Route path="/forgot-password" element={<ForgotPassword />} />
@@ -76,7 +78,6 @@ export default function App() {
           </ProtectedRoute>
         }
       >
-        <Route index element={<Navigate to="/dashboard" replace />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/applications" element={<ApplicationsList />} />
         <Route path="/applications/new" element={<ApplicationForm />} />
