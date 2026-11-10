@@ -1,26 +1,76 @@
 import { Link } from 'react-router-dom'
 import { BrandLogo } from '@/components/layout/BrandLogo'
 
-const previewApplications = [
-  { company: 'Northstar', role: 'Product Designer', status: 'Interview', date: 'Today' },
-  { company: 'Fieldnote', role: 'Senior UX Designer', status: 'Applied', date: 'Yesterday' },
-  { company: 'Common Thread', role: 'Design Lead', status: 'Follow up', date: 'May 18' },
+const productShots = [
+  {
+    image: '/landing/applications.png',
+    alt: 'Applywell Applications screen with a searchable list of job applications and stages.',
+    number: '01',
+    title: 'Know where every application stands.',
+    copy: 'Keep company, role, status, recruiter, and next step together. Find the right opportunity with search, filters, and active or archived views.',
+  },
+  {
+    image: '/landing/metrics.png',
+    alt: 'Applywell Metrics screen showing a conversion funnel, pipeline averages, status bars, and weekly volume.',
+    number: '02',
+    title: 'See your search take shape.',
+    copy: 'Understand application activity and your pipeline over time, all in the same workspace as your day-to-day follow-ups.',
+  },
+  {
+    image: '/landing/exports.png',
+    alt: 'Applywell Exports screen with CSV and XLSX options, application filters, scheduled exports, and export history.',
+    number: '03',
+    title: 'Keep a copy of your work.',
+    copy: 'Export the fields you need to CSV or XLSX. Schedule recurring backups to Google Drive when you connect your account.',
+  },
 ]
+
+const questions = [
+  {
+    question: 'What is Applywell?',
+    answer: 'Applywell is a workspace for organizing job applications, interview stages, and follow-ups. It also includes metrics and export tools to help you review your search.',
+  },
+  {
+    question: 'How does the AI integration work?',
+    answer: 'Ask Applywell is an in-app assistant for questions about your application data. You can also connect MCP-compatible AI clients to Applywell. The assistant responds to requests; it does not apply to jobs or send messages on your behalf.',
+  },
+  {
+    question: 'Can I export my application data?',
+    answer: 'Yes. You can download selected application data as CSV or XLSX. You can also configure recurring exports to Google Drive after connecting a Google account.',
+  },
+  {
+    question: 'Can I use Applywell on my phone?',
+    answer: 'Yes. The interface adapts to mobile and desktop screens so you can check your search wherever you are.',
+  },
+  {
+    question: 'Where can I learn how my information is handled?',
+    answer: 'Read the Privacy Policy for details about account information, application data, integrations, and your choices.',
+  },
+]
+
+function Screenshot({ src, alt, className = '' }: { src: string; alt: string; className?: string }) {
+  return (
+    <div className={`landing-shot ${className}`}>
+      <img src={src} alt={alt} loading="lazy" />
+      <span className="landing-shot-label">SAMPLE WORKSPACE</span>
+    </div>
+  )
+}
 
 export default function Landing() {
   return (
     <main className="landing-page">
       <header className="landing-header">
-        <Link to="/" className="landing-brand" aria-label="Applywell home">
-          <BrandLogo />
-        </Link>
+        <Link to="/" className="landing-brand" aria-label="Applywell home"><BrandLogo /></Link>
         <nav aria-label="Main navigation" className="landing-nav">
-          <a href="#preview">Product</a>
-          <a href="#how-it-works">How it works</a>
+          <a href="#features">Features</a>
+          <a href="#ai">AI + MCP</a>
+          <a href="#security">Security</a>
+          <a href="#faq">FAQ</a>
         </nav>
         <div className="landing-actions">
           <Link className="landing-signin" to="/login">Sign in</Link>
-          <Link className="landing-start" to="/register">Get started <span aria-hidden="true">↗</span></Link>
+          <Link className="landing-start" to="/register">Get started <span aria-hidden="true">→</span></Link>
         </div>
       </header>
 
@@ -29,62 +79,94 @@ export default function Landing() {
           <p className="landing-eyebrow"><span aria-hidden="true" /> A clearer way to job search</p>
           <h1 id="landing-title">Your career.<br /><span>Clearly organized.</span></h1>
           <p className="landing-description">
-            Keep every application, follow-up, and interview in one calm workspace. Connect your workflow to AI tools with MCP when you need a little extra help.
+            Keep applications, interviews, and follow-ups in one workspace. Bring your job search into focus, then connect compatible AI tools with MCP.
           </p>
           <div className="landing-hero-actions">
-            <Link className="landing-start landing-start-large" to="/register">Get started <span aria-hidden="true">↗</span></Link>
-            <a className="landing-explore" href="#preview">Explore the workspace <span aria-hidden="true">↓</span></a>
+            <Link className="landing-start landing-start-large" to="/register">Get started <span aria-hidden="true">→</span></Link>
+            <a className="landing-explore" href="#features">Explore the workspace <span aria-hidden="true">↓</span></a>
           </div>
-          <p className="landing-note">A thoughtful home for your next opportunity.</p>
+          <p className="landing-note">A sample of the real Applywell workspace.</p>
         </div>
-
-        <div className="landing-art" id="preview" aria-label="Illustrative Applywell application dashboard preview">
-          <div className="preview-window">
-            <div className="preview-topbar">
-              <div className="preview-brand"><span className="preview-mark">a</span> applywell</div>
-              <div className="preview-avatar" aria-hidden="true">J</div>
-            </div>
-            <div className="preview-content">
-              <div className="preview-heading">
-                <div><p className="preview-kicker">TUESDAY, MAY 21</p><h2>Your search, in focus.</h2></div>
-                <span className="preview-add" aria-hidden="true">＋ New application</span>
-              </div>
-              <div className="preview-stats" aria-label="Example statistics">
-                <div><span>Active applications</span><strong>12</strong><small>across your search</small></div>
-                <div><span>In conversation</span><strong>04</strong><small>next steps ahead</small></div>
-                <div><span>Interviews</span><strong>02</strong><small>you’ve got this</small></div>
-              </div>
-              <div className="preview-table-head"><span>RECENT APPLICATIONS</span><span>VIEW ALL&nbsp; ↗</span></div>
-              <div className="preview-rows">
-                {previewApplications.map((application) => (
-                  <div className="preview-row" key={application.company}>
-                    <div className="preview-company-mark" aria-hidden="true">{application.company.slice(0, 1)}</div>
-                    <div className="preview-role"><strong>{application.company}</strong><span>{application.role}</span></div>
-                    <span className={`preview-status ${application.status === 'Interview' ? 'is-interview' : ''}`}>{application.status}</span>
-                    <time>{application.date}</time>
-                  </div>
-                ))}
-              </div>
-              <div className="preview-footer"><span><i /> YOUR MOMENTUM, AT A GLANCE</span><span>THIS WEEK&nbsp; ↗</span></div>
-              <div className="preview-chart" aria-hidden="true">
-                <div className="chart-labels"><span>8</span><span>6</span><span>4</span><span>2</span></div>
-                <svg viewBox="0 0 520 74" preserveAspectRatio="none" role="presentation">
-                  <path d="M0 60 C30 58 40 44 72 48 S115 60 145 42 S190 49 218 35 S256 44 290 28 S332 38 360 24 S405 37 432 16 S484 24 520 6" fill="none" stroke="currentColor" strokeWidth="2" />
-                  <path d="M0 60 C30 58 40 44 72 48 S115 60 145 42 S190 49 218 35 S256 44 290 28 S332 38 360 24 S405 37 432 16 S484 24 520 6 L520 74 L0 74Z" fill="currentColor" opacity=".045" />
-                </svg>
-                <div className="chart-days"><span>MON</span><span>TUE</span><span>WED</span><span>THU</span><span>FRI</span><span>SAT</span><span>SUN</span></div>
-              </div>
-            </div>
-          </div>
-          <div className="preview-caption"><span>01 — YOUR SEARCH, AT A GLANCE</span><span>ILLUSTRATIVE PREVIEW</span></div>
+        <div className="landing-hero-shot" aria-label="Applywell product preview">
+          <Screenshot src="/landing/dashboard.png" alt="Applywell Dashboard with application metrics, achievements, and follow-up lists." />
+          <p className="landing-shot-caption"><span>YOUR SEARCH, AT A GLANCE</span><span>DEMO DATA</span></p>
         </div>
       </section>
 
-      <section className="landing-bottom" id="how-it-works" aria-label="Product summary">
+      <section className="landing-intro" aria-label="Applywell at a glance">
         <p>ONE PLACE FOR THE DETAILS THAT MOVE YOU FORWARD.</p>
-        <div><span>Applications</span><span>Interviews</span><span>Follow-ups</span><span>MCP + AI integrations</span></div>
+        <div><span>Applications</span><span>Interviews</span><span>Follow-ups</span><span>Metrics</span><span>Exports</span></div>
       </section>
-      <footer className="landing-footer"><span>© Applywell</span><Link to="/privacy-policy">Privacy</Link><span>Make room for what’s next.</span></footer>
+
+      <section className="landing-features" id="features" aria-labelledby="features-title">
+        <div className="landing-section-heading">
+          <p className="landing-eyebrow">A workspace built around your search</p>
+          <h2 id="features-title">Less juggling.<br /><span>More clarity.</span></h2>
+          <p>From the first application to the next conversation, keep the details close and your momentum visible.</p>
+        </div>
+        <div className="landing-feature-list">
+          {productShots.map((shot) => (
+            <article className="landing-feature-row" key={shot.number}>
+              <div className="landing-feature-copy">
+                <p className="landing-eyebrow">{shot.number} / THE WORKSPACE</p>
+                <h3>{shot.title}</h3>
+                <p>{shot.copy}</p>
+              </div>
+              <Screenshot src={shot.image} alt={shot.alt} />
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section className="landing-ai" id="ai" aria-labelledby="ai-title">
+        <div className="landing-ai-copy">
+          <p className="landing-eyebrow"><span aria-hidden="true" /> AI that works with your search</p>
+          <h2 id="ai-title">Your data,<br /><span>in the conversation.</span></h2>
+          <p>Ask Applywell about your applications, progress, or follow-ups. Connect an MCP-compatible AI client to work with your Applywell data from the tools you already use.</p>
+          <p className="landing-ai-detail">The assistant provides information when you ask. It does not submit applications or contact recruiters for you.</p>
+          <Link className="landing-text-link" to="/mcp">Learn about MCP <span aria-hidden="true">→</span></Link>
+        </div>
+        <Screenshot src="/landing/assistant.png" alt="Ask Applywell chat showing a sample summary of applications and scheduled interviews." className="landing-ai-shot" />
+      </section>
+
+      <section className="landing-security" id="security" aria-labelledby="security-title">
+        <div>
+          <p className="landing-eyebrow">Built with care for your information</p>
+          <h2 id="security-title">Security is part<br />of the system.</h2>
+        </div>
+        <div className="landing-security-copy">
+          <p>Applywell’s published security practices include BCrypt password hashing, HTTPS/TLS for browser connections, rotating refresh tokens stored in HttpOnly cookies, and rate limiting on authentication endpoints.</p>
+          <Link to="/privacy-policy">Read the Privacy Policy <span aria-hidden="true">→</span></Link>
+        </div>
+      </section>
+
+      <section className="landing-faq" id="faq" aria-labelledby="faq-title">
+        <div className="landing-faq-heading">
+          <p className="landing-eyebrow">Good to know</p>
+          <h2 id="faq-title">Questions,<br /><span>answered.</span></h2>
+          <p>Need more detail? Visit <Link to="/help">Help</Link> or read our <Link to="/privacy-policy">Privacy Policy</Link>.</p>
+        </div>
+        <div className="landing-faq-list">
+          {questions.map((item) => (
+            <details key={item.question}>
+              <summary>{item.question}<span aria-hidden="true">+</span></summary>
+              <p>{item.answer}</p>
+            </details>
+          ))}
+        </div>
+      </section>
+
+      <section className="landing-cta" aria-labelledby="cta-title">
+        <p className="landing-eyebrow">Make room for what’s next</p>
+        <h2 id="cta-title">A little more clarity<br />goes a long way.</h2>
+        <Link className="landing-start landing-start-large" to="/register">Get started <span aria-hidden="true">→</span></Link>
+      </section>
+
+      <footer className="landing-footer">
+        <Link to="/" className="landing-footer-brand"><BrandLogo /></Link>
+        <nav aria-label="Footer navigation"><a href="#features">Features</a><a href="#ai">AI + MCP</a><a href="#security">Security</a><a href="#faq">FAQ</a><Link to="/privacy-policy">Privacy</Link><Link to="/login">Sign in</Link></nav>
+        <span>© Applywell</span>
+      </footer>
     </main>
   )
 }
