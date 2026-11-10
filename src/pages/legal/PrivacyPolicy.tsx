@@ -26,7 +26,7 @@ export default function PrivacyPolicy() {
               application that helps users organize their job search by tracking applications,
               deadlines, and statuses. It also allows users to generate tailored resumes using
               their own Google Drive. Applywell is operated by Vitor Hugo Alves Ferreira
-              (vitorhugoalvesferreira@gmail.com).
+              (hugodigital12@gmail.com).
             </p>
           </section>
 
@@ -117,10 +117,10 @@ export default function PrivacyPolicy() {
               permanent deletion of your account and all associated data at any time by
               contacting us at{' '}
               <a
-                href="mailto:vitorhugoalvesferreira@gmail.com"
+                href="mailto:hugodigital12@gmail.com"
                 className="underline text-mono-1 hover:opacity-70"
               >
-                vitorhugoalvesferreira@gmail.com
+                hugodigital12@gmail.com
               </a>
               . Upon account deletion, all personally identifiable information is permanently
               removed from our systems within 30 days.
@@ -139,10 +139,10 @@ export default function PrivacyPolicy() {
             <p className="text-mono-2">
               To exercise any of these rights, contact{' '}
               <a
-                href="mailto:vitorhugoalvesferreira@gmail.com"
+                href="mailto:hugodigital12@gmail.com"
                 className="underline text-mono-1 hover:opacity-70"
               >
-                vitorhugoalvesferreira@gmail.com
+                hugodigital12@gmail.com
               </a>
               .
             </p>
@@ -173,10 +173,10 @@ export default function PrivacyPolicy() {
             <p className="text-mono-2">
               Questions or concerns about this Privacy Policy?{' '}
               <a
-                href="mailto:vitorhugoalvesferreira@gmail.com"
+                href="mailto:hugodigital12@gmail.com"
                 className="underline text-mono-1 hover:opacity-70"
               >
-                vitorhugoalvesferreira@gmail.com
+                hugodigital12@gmail.com
               </a>
             </p>
           </section>
