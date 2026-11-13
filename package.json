@@ -21,7 +21,7 @@
     "react-dom": "^19.3.1",
     "react-hook-form": "^7.91.0",
     "react-markdown": "^10.1.0",
-    "react-router-dom": "^7.18.4",
+    "react-router-dom": "^7.18.5",
     "rehype-raw": "^7.0.0",
     "rehype-sanitize": "^6.0.0",
     "vite-plugin-pwa": "^2.0.0",
