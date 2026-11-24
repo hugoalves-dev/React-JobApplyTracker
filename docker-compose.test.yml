@@ -1,17 +1,16 @@
 services:
   db:
-    image: mariadb:10.11
-    command: --innodb-use-native-aio=0
+    # The backend image runs PostgreSQL migrations (including pgvector), same image as its own tests.
+    image: pgvector/pgvector:0.8.7-pg18
     restart: unless-stopped
     environment:
-      MYSQL_ROOT_PASSWORD: rootpassword
-      MYSQL_DATABASE: jobtracker
-      MYSQL_USER: jobtracker
-      MYSQL_PASSWORD: jobtracker
+      POSTGRES_DB: jobtracker
+      POSTGRES_USER: jobtracker
+      POSTGRES_PASSWORD: jobtracker
     ports:
-      - '3306:3306'
+      - '5432:5432'
     healthcheck:
-      test: ["CMD", "mariadb-admin", "ping", "-h", "127.0.0.1", "-u", "$$MYSQL_USER", "--password=$$MYSQL_PASSWORD", "--protocol", "tcp"]
+      test: ["CMD-SHELL", "pg_isready -U jobtracker -d jobtracker"]
       interval: 5s
       timeout: 5s
       retries: 20
@@ -24,7 +23,7 @@ services:
       - '8080:8080'
     container_name: job-tracker-app
     environment:
-      SPRING_DATASOURCE_URL: jdbc:mariadb://db:3306/jobtracker
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/jobtracker
       SPRING_DATASOURCE_USERNAME: jobtracker
       SPRING_DATASOURCE_PASSWORD: jobtracker
       SPRING_JPA_HIBERNATE_DDL_AUTO: update
