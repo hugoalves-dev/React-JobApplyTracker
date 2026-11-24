@@ -23,6 +23,7 @@ import {
 } from '@/api/resumes'
 import { getPasskeyStatus, registerPasskey, isPasskeySupported } from '@/api/passkey'
 import { useAuthStore } from '@/store/authStore'
+import { IntegrationsSettings } from './IntegrationsSettings'
 import type { BaseResume, BaseInformation } from '@/types'
 
 function SetCard({
@@ -593,6 +594,7 @@ export default function AccountSettings() {
         <PasswordSection />
         <PasskeySection />
         <GoogleDriveSection />
+        <IntegrationsSettings />
 
         <SetCard title="Danger Zone" sub="Irreversible and destructive actions" danger>
           <div className="flex flex-wrap items-center gap-3.5">
